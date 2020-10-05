@@ -1,13 +1,16 @@
 const router = require("express").Router();
 
-// Create user
-router.post("/register-user", (req, res) => {
-    res.json("user register");
-});
+const { index, store } = require("../controllers/userController");
+const { userSchemaValidation } = require("../validators/userValidation");
 
 // View user
-router.get("/view-user", (req, res) => {
-    res.json("view user");
+router.get("/", async (req, res) => {
+    await index(req, res);
+});
+
+// Create user
+router.post("/", userSchemaValidation, async (req, res) => {
+    await store(req.body, res);
 });
 
 // View user with id
@@ -24,3 +27,5 @@ router.put("/update-user", (req, res) => {
 router.delete("/delete-user", (req, res) => {
     res.json("delete user");
 });
+
+module.exports = router;

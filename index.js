@@ -6,6 +6,7 @@ const { connect } = require("mongoose");
 
 // Getting routes
 const roleRoute = require("./routes/roles_router");
+const userRoute = require("./routes/users_router");
 
 // getting  config content
 const { DB, PORT } = require("./config");
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
     res.send("hello world");
 });
 app.use("/api/roles", roleRoute);
+app.use("/api/users", userRoute);
 
 // Function for connection and starting server
 const startApp = async () => {

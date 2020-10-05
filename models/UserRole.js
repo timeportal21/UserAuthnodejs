@@ -4,14 +4,14 @@ const userRoleSchema = new Schema(
     {
         role_idfk: {
             type: Schema.Types.ObjectId,
-            ref: "role",
+            ref: "Role",
         },
         user_idfk: {
             type: Schema.Types.ObjectId,
-            ref: "user",
+            ref: "User",
         },
     },
     { timestamps: true }
 );
 
-module.exports = model("userRoles", userRoleSchema);
+module.exports = model("user-roles", userRoleSchema);

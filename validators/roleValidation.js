@@ -1,16 +1,24 @@
 const Joi = require("@hapi/joi");
 
+const options = {
+    errors: {
+        wrap: {
+            label: "",
+        },
+    },
+};
+
 const schema = Joi.object({
     name: Joi.string().min(3).required().messages({
         "string.base": "Invalid type, role name must be string",
         "string.empty": "role name is not allowed to be empty",
-        "string.min": "name length must be at least 3 characters long",
-        "any.required": "name is a required field",
+        "string.min": "role name length must be at least 3 characters long",
+        "any.required": "role name is a required field",
     }),
 });
 
 const roleSchemaValidation = async (req, res, next) => {
-    const { error } = schema.validate(req.body, { abortEarly: false });
+    const { error } = schema.validate(req.body, options, { abortEarly: false });
     if (error) {
         const extractedErrors = [];
         error.details &&
