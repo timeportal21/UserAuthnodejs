@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const Role = require("../models/Role");
 
 const index = async (req, res) => {
     try {
@@ -39,6 +40,32 @@ const show = async (id, res) => {
     } catch (error) {
         return res.json({ message: "data cannot be found" });
     }
+};
+
+const update = async (req, res) => {
+    let id = req.params.id;
+    try {
+        const updateUser = await User.findByIdAndUpdate(id, req.body, {
+            useFindAndModify: false,
+        });
+
+        if (!updateUser)
+            return res.status(400).json({ message: "Failed to Update" });
+        return res.status(200).json({ message: "successfully update" });
+    } catch (error) {
+        return res.status(400).json({ message: "Failed to Update" });
+    }
+};
+
+const destroy = async (id, res) => {
+    try {
+        const removeUser = await Role.findByIdAndDelete(id);
+        if (removeUser)
+            return res
+                .status(200)
+                .json({ message: "successfully deleted user" });
+        return res.status(422).json({ message: "User cannot be deleted" });
+    } catch (error) {}
 };
 
 module.exports = { index, store, show };

@@ -58,10 +58,10 @@ const update = async (req, res) => {
         const updateRole = await Role.findByIdAndUpdate(id, req.body, {
             useFindAndModify: false,
         });
-        if (!updateRole) return res.json("failed to update role");
+        if (!updateRole) return res.json({ message: "failed to update role" });
         return res.status(200).json({ message: `role successfully updated` });
     } catch (error) {
-        return res.status(400).json(error);
+        return res.status(400).json({ message: "failed to update" });
     }
 };
 
