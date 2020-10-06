@@ -10,13 +10,22 @@ const options = {
 };
 
 const schema = Joi.object({
-    fullName: Joi.string().required(),
+    fullName: Joi.string().required().messages({
+        "string.base": "Invalid Type, Name must be string",
+        "string.empty": "Name is not allowed to be empty",
+        "any.required": "Name field is required",
+    }),
     email: Joi.string().email().required(),
     password: Joi.string().required().min(6),
-    confirm_password: Joi.string().valid(Joi.ref("password")).messages({
-        "string.base": "Invalid type",
-        "any.only": "confirm password doesnot match",
-    }),
+    confirm_password: Joi.string()
+        .required()
+        .valid(Joi.ref("password"))
+        .messages({
+            "string.base": "Invalid type",
+            "string.empty": "confirm password is not allowed to be empty",
+            "string.required": "you must confirm password first",
+            "any.only": "password doesnot match",
+        }),
 });
 
 const userSchemaValidation = async (req, res, next) => {
