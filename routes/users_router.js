@@ -1,6 +1,5 @@
 const router = require("express").Router();
-
-const { index, store } = require("../controllers/userController");
+const { index, store, show } = require("../controllers/userController");
 const { userSchemaValidation } = require("../validators/userValidation");
 
 // View user
@@ -14,17 +13,17 @@ router.post("/", userSchemaValidation, async (req, res) => {
 });
 
 // View user with id
-router.get("/view-user/:id", (req, res) => {
-    res.json("id user view");
+router.get("/:id", async (req, res) => {
+    await show(req.params.id, res);
 });
 
 // Update user
-router.put("/update-user", (req, res) => {
+router.put("/:id", (req, res) => {
     res.json("update user");
 });
 
 // Delete user
-router.delete("/delete-user", (req, res) => {
+router.delete("/:id", (req, res) => {
     res.json("delete user");
 });
 

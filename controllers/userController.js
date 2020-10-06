@@ -31,4 +31,14 @@ const store = async (req, res) => {
     }
 };
 
-module.exports = { index, store };
+const show = async (id, res) => {
+    try {
+        let user = await User.findById(id);
+        if (!user) return res.json({ message: "data cannot be found" });
+        return res.status(200).json(user);
+    } catch (error) {
+        return res.json({ message: "data cannot be found" });
+    }
+};
+
+module.exports = { index, store, show };
