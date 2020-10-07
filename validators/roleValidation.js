@@ -6,6 +6,7 @@ const options = {
             label: "",
         },
     },
+    abortEarly: false,
 };
 
 const schema = Joi.object({
@@ -18,7 +19,7 @@ const schema = Joi.object({
 });
 
 const roleSchemaValidation = async (req, res, next) => {
-    const { error } = schema.validate(req.body, options, { abortEarly: false });
+    const { error } = schema.validate(req.body, options);
     if (error) {
         const extractedErrors = [];
         error.details &&
