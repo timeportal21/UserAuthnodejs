@@ -17,6 +17,5 @@ module.exports = function pagination(req, data) {
         };
     }
     results.results = data.slice(startIndex, endIndex);
-
     return results;
 };
