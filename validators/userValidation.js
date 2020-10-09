@@ -31,12 +31,31 @@ const schema = Joi.object({
 const userSchemaValidation = async (req, res, next) => {
     const { error } = schema.validate(req.body, options);
     if (error) {
-        const extractedErrors = [];
-        error.details &&
-            error.details.map((err) => {
-                extractedErrors.push({ [err.context.key]: err.message });
-            });
-        return res.status(422).json({ error: extractedErrors });
+        // const yoyo = JSON.parse(error);
+
+        const errorObj = {};
+
+        for (const key of error.details) {
+            errorObj[key.context.label] = key.message;
+        }
+
+        // error.details &&
+        //     error.details.map((err, i) => {
+        //         // lwal[i] = { name: err.context.key, vlue: err.message };
+        //         lwal;
+        //         // extractedErrors.push({ [err.context.key]: err.message });
+        //     });
+
+        // const extractedErrors = [];
+        // error.details &&
+        //     error.details.map((err) => {
+        //         extractedErrors.push({ [err.context.key]: err.message });
+        //     });
+
+        // const objConstant = Object.assign({}, extractedErrors);
+        // const objConstant = Object.keys(extractedErrors);
+
+        return res.status(422).json({ error: errorObj });
     }
     next();
 };

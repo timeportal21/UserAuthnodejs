@@ -21,12 +21,18 @@ const schema = Joi.object({
 const roleSchemaValidation = async (req, res, next) => {
     const { error } = schema.validate(req.body, options);
     if (error) {
-        const extractedErrors = [];
-        error.details &&
-            error.details.map((err) => {
-                extractedErrors.push({ [err.context.key]: err.message });
-            });
-        return res.status(422).json({ error: extractedErrors });
+        const errorObj = {};
+
+        for (const key of error.details) {
+            errorObj[key.context.label] = key.message;
+        }
+
+        // const extractedErrors = [];
+        // error.details &&
+        //     error.details.map((err) => {
+        //         extractedErrors.push({ [err.context.key]: err.message });
+        //     });
+        return res.status(422).json({ error: errorObj });
     }
     next();
 };
